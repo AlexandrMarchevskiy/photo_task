@@ -21,9 +21,9 @@ def signupuser(request):
                 login(request, user)
                 return redirect('gallery')
             except IntegrityError:
-                return render(request, 'photos/signupuser.html', {'form': UserCreationForm(), 'error': 'That username has already been taken. Please choose a new username'})
+                return render(request, 'photos/signupuser.html', {'form': UserCreationForm(), 'ошибка': 'Это имя пользователя уже занято. Пожалуйста, выберите новое имя пользователя'})
         else:
-            return render(request, 'photos/signupuser.html', {'form': UserCreationForm(), 'error': 'Passwords did not match'})
+            return render(request, 'photos/signupuser.html', {'form': UserCreationForm(), 'ошибка': 'Пароли не совпадают'})
 
 
 def loginuser(request):
@@ -32,7 +32,7 @@ def loginuser(request):
     else:
         user = authenticate(request, username=request.POST['username'], password=request.POST['password'])
         if user is None:
-            return render(request, 'photos/loginuser.html', {'form': AuthenticationForm(), 'error': 'Username and password did not match'})
+            return render(request, 'photos/loginuser.html', {'form': AuthenticationForm(), 'ошибка': 'Имя пользователя и пароль не совпадают'})
         else:
             login(request, user)
             return redirect('gallery')

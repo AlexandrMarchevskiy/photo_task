@@ -10,7 +10,6 @@ from rest_framework.parsers import JSONParser, FormParser, MultiPartParser
 
 from app.models import Album, Photo
 
-from .permissions import IsOwnerOrReadOnly
 from .serializers import AlbumSerializer, PhotoSerializer, PhotoWithoutImageField, AlbumListSerializer
 
 
@@ -26,7 +25,7 @@ def signup(request):
             return JsonResponse({'token': str(token)}, status=201)
         except IntegrityError:
             return JsonResponse(
-                {'error': 'That username has already been taken. Please choose a new username'}, status=400)
+                {'ошибка': 'Это имя пользователя уже занято. Пожалуйста, выберите новое имя пользователя'}, status=400)
 
 
 @csrf_exempt
@@ -36,7 +35,7 @@ def login(request):
         user = authenticate(request, username=data['username'], password=data['password'])
         if user is None:
             return JsonResponse(
-                {'error': 'Could not login. Please check username and password'}, status=400)
+                {'ошибка': 'Не удалось войти. Пожалуйста, проверьте имя пользователя и пароль'}, status=400)
         else:
             try:
                 token = Token.objects.get(user=user)

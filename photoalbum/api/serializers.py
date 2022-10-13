@@ -12,11 +12,6 @@ class PhotoSerializer(serializers.ModelSerializer):
         fields = ('__all__')
         read_only_fields = ['user', 'created']
 
-    def validate_photo(self, album_instance: Album):
-        if album_instance.user == self.context["request"].user:
-            return album_instance
-        raise serializers.ValidationError("Not belongs to you!!!")
-
     image = VersatileImageFieldSerializer(
         sizes=[
             ('full_size', 'url'),
